@@ -27,6 +27,7 @@ public class ExpiredCouponDailyRemoval {
 
     //@Scheduled(cron = "0 0 6 * * *")
     @Scheduled(fixedRate = 1000*10)
+    //@Scheduled(fixedRate = DAILY)
     public void removeExpiredCoupon() throws CouponSysException {
         printUtils.print("Get all coupons");
         adminService.getAllCoupons().forEach(System.out::println);
