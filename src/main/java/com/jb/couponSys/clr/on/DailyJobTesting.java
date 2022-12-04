@@ -67,14 +67,6 @@ public class DailyJobTesting implements CommandLineRunner {
         printUtils.print("Expired coupons removal started");
         expiredCouponDailyRemoval.removeExpiredCoupon();
         printUtils.breakFunc();
-        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
-        printUtils.theEnd();
-        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
+
     }
 }

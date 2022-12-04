@@ -25,8 +25,8 @@ public class ExpiredCouponDailyRemoval {
 //    @Value("${string.time}")
 //    private int DAILY;
 
-    //@Scheduled(cron = "0 0 6 * * *")
-    @Scheduled(fixedRate = 1000*10)
+    @Scheduled(cron = "0 0 6 * * *")
+    //@Scheduled(fixedRate = 1000*10)
     //@Scheduled(fixedRate = DAILY)
     public void removeExpiredCoupon() throws CouponSysException {
         printUtils.print("Get all coupons");
