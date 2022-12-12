@@ -1,7 +1,6 @@
 package com.jb.couponSys.service;
 
 import com.jb.couponSys.beans.Category;
-import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
 import com.jb.couponSys.exception.CouponSysException;
@@ -80,14 +79,14 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
 
     @Override
     public Customer getLoginCustomer(int customerId) throws CouponSysException {
-        return customerRepository.findById(customerId).orElseThrow(()->new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        return customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
     }
 
     @Override
     public boolean login(String email, String password) throws CouponSysException {
-        if(customerRepository.existsByEmailAndPassword(email, password)){
-            int customerId=customerRepository.getCustomerIdByEmailAndPassword(email,password);
-            Customer customer=customerRepository.findById(customerId).orElseThrow(()->new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        if (customerRepository.existsByEmailAndPassword(email, password)) {
+            int customerId = customerRepository.getCustomerIdByEmailAndPassword(email, password);
+            Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
             customer.setId(customerId);
             return true;
         }

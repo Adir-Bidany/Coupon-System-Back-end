@@ -4,7 +4,6 @@ import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
-import com.jb.couponSys.jobs.ExpiredCouponDailyRemoval;
 import com.jb.couponSys.repository.CompanyRepository;
 import com.jb.couponSys.repository.CouponRepository;
 import com.jb.couponSys.repository.CustomerRepository;
@@ -31,7 +30,9 @@ public class Init implements CommandLineRunner {
     private CouponRepository couponRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        printUtils.breakFunc();
+        printUtils.init();
         Company company1 = Company.builder()
                 .name("Coca cola")
                 .email("company1@couponsystem.com")
@@ -209,7 +210,6 @@ public class Init implements CommandLineRunner {
         company1.setCoupons(List.of(coupon1, coupon2, coupon3));
         company2.setCoupons(List.of(coupon4, coupon5));
         company3.setCoupons(List.of(coupon6, coupon7, coupon8, coupon9, coupon10));
-
         companyRepository.saveAll(List.of(company1, company2, company3));
         couponRepository.saveAll(List.of(coupon1, coupon2, coupon3, coupon4,
                 coupon5, coupon6, coupon7, coupon8, coupon9, coupon10));
@@ -220,10 +220,7 @@ public class Init implements CommandLineRunner {
         customerRepository.findAll().forEach(System.out::println);
         System.out.println("__________________________companies________________________________");
         companyRepository.findAll().forEach(System.out::println);
-//
-//        printUtils.adminLogin();
-//        printUtils.companyLogin();
-//        printUtils.customerLogin();
-
+        printUtils.print("Init ended");
+        printUtils.breakFunc();
     }
 }

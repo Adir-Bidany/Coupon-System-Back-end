@@ -37,6 +37,7 @@ public class CustomerServiceTesting implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        printUtils.customerLogin();
         Company company = adminService.getSingleCompany(5);
         Customer customer = Customer.builder()
                 .firstName("Customer login")
@@ -106,8 +107,7 @@ public class CustomerServiceTesting implements CommandLineRunner {
         companyService.addCoupon(exception);
         companyService.addCoupon(exception2);
         customer.setCoupons(List.of(coupon, coupon1, coupon2));
-        System.out.println(adminService.getSingleCustomer(8));
-        printUtils.customerLogin();
+        adminService.updateCustomer(customer.getId(), customer);
         customerService = (CustomerService) loginManager.login(customer.getEmail(), customer.getPassword(), ClientType.CUSTOMER);
         printUtils.print("Customer logged in successfully");
         printUtils.print("Purchase coupon");
@@ -134,10 +134,10 @@ public class CustomerServiceTesting implements CommandLineRunner {
         }
         printUtils.breakFunc();
         printUtils.print("Get All Customer Purchased Coupons By Category");
-        customerService.getAllCustomerPurchasedCouponsByCategory(customer.getId(), Category.FOOD).forEach(System.out::println);
+        customerService.getAllCustomerPurchasedCouponsByCategory(customer.getId(), Category.VACATION).forEach(System.out::println);
         printUtils.print("Get All Customer Purchased Coupons By Max Price");
         customerService.getAllCustomerPurchasedCouponsByMaxPrice(customer.getId(), 30).forEach(System.out::println);
+        printUtils.print("Customer service testing ended");
         printUtils.breakFunc();
-
     }
 }

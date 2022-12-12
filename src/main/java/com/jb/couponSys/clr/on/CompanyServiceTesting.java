@@ -32,6 +32,7 @@ public class CompanyServiceTesting implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        printUtils.companyLogin();
         Company company = Company.builder()
                 .name("Coca cola4")
                 .email("company8couponsystem.com")
@@ -76,6 +77,7 @@ public class CompanyServiceTesting implements CommandLineRunner {
                 .price(1.5)
                 .build();
         Coupon exception = Coupon.builder()
+                .company(company)
                 .amount(10)
                 .category(Category.FOOD)
                 .title("Added coupon fifth")
@@ -88,7 +90,6 @@ public class CompanyServiceTesting implements CommandLineRunner {
         company.setCoupons(List.of(coupon, coupon1));
         adminService.addCompany(company);
         adminService.addCompany(company77);
-        printUtils.companyLogin();
         companyService = (CompanyService) loginManager.login(company.getEmail(), company.getPassword(), ClientType.COMPANY);
         printUtils.print("Company logged in successfully");
         printUtils.print("Add coupon");
@@ -103,6 +104,7 @@ public class CompanyServiceTesting implements CommandLineRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        // TODO: 09/12/2022 fix update coupon
         printUtils.breakFunc();
         printUtils.print("Update coupon");
         printUtils.print("Before");
@@ -122,16 +124,16 @@ public class CompanyServiceTesting implements CommandLineRunner {
         }
         coupon.setId(21);
         coupon.setCompany(company77);
-        try{
-            companyService.updateCoupon(21,coupon);
-        }catch (Exception e){
+        try {
+            companyService.updateCoupon(21, coupon);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         printUtils.breakFunc();
         printUtils.print("Delete Coupon");
         printUtils.print("Before");
         adminService.getAllCoupons().forEach(System.out::println);
-        printUtils.print("After");
+        printUtils.print("After deleting coupon #22");
         companyService.deleteCoupon(22);
         adminService.getAllCoupons().forEach(System.out::println);
         printUtils.breakFunc();
@@ -143,7 +145,9 @@ public class CompanyServiceTesting implements CommandLineRunner {
         printUtils.breakFunc();
         printUtils.print("Get all company coupons by max price 30");
         companyService.getAllCompanyCouponsByMaxPrice(company.getId(), 30).forEach(System.out::println);
+        printUtils.print("Company service testing ended");
         printUtils.breakFunc();
+        // TODO: 10/12/2022  return the company details that enter
 
     }
 }

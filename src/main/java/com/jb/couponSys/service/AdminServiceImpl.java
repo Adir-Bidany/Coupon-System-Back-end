@@ -22,8 +22,9 @@ public class AdminServiceImpl extends ClientService implements AdminService {
         if (companyRepository.existsByName(company.getName())) {
             throw new CouponSysException(ErrMsg.COMPANY_NAME_ALREADY_EXIST);
         }
-        if(company.getCoupons()!=null){
-        company.getCoupons().forEach(coupon -> coupon.setCompany(company));}
+        if (company.getCoupons() != null) {
+            company.getCoupons().forEach(coupon -> coupon.setCompany(company));
+        }
         companyRepository.save(company);
     }
 
@@ -60,6 +61,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
+
     @Override
     public List<Coupon> getAllCoupons() {
         return couponRepository.findAll();
@@ -78,7 +80,6 @@ public class AdminServiceImpl extends ClientService implements AdminService {
         if (customerRepository.existsByEmail(customer.getEmail())) {
             throw new CouponSysException(ErrMsg.COMPANY_EMAIL_ALREADY_EXIST);
         }
-//        customer.getCoupons().forEach(coupon -> coupon.setCustomers());
         customerRepository.save(customer);
 
     }
@@ -97,7 +98,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
 
     @Override
     public void deleteCustomer(int customerId) throws CouponSysException {
-        if (!customerRepository.existsById(customerId)){
+        if (!customerRepository.existsById(customerId)) {
             throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
         }
         customerRepository.deleteCustomerCoupons(customerId);

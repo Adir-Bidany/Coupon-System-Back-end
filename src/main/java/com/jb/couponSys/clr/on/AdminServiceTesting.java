@@ -35,10 +35,7 @@ public class AdminServiceTesting implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        printUtils.breakFunc();
-        printUtils.print("\u2764\u2764\u2764\u2764\u2764\u2764CLR testing started\u2764\u2764\u2764\u2764\u2764\u2764");
-        printUtils.breakFunc();
-
+        printUtils.adminLogin();
         Company company4 = Company.builder()
                 .name("Coca cola1")
                 .email("company4@couponsystem.com")
@@ -233,8 +230,6 @@ public class AdminServiceTesting implements CommandLineRunner {
         company4.setCoupons(List.of(coupon1, coupon2, coupon3));
         company5.setCoupons(List.of(coupon4, coupon5));
         company6.setCoupons(List.of(coupon6, coupon7, coupon8, coupon9, coupon10));
-
-        printUtils.adminLogin();
         adminService = (AdminService) loginManager.login("admin@admin.com", "admin", ClientType.ADMINISTRATOR);
         printUtils.print("Admin logged in successfully");
         printUtils.print("Add companies");
@@ -243,31 +238,16 @@ public class AdminServiceTesting implements CommandLineRunner {
         adminService.addCompany(company6);
         adminService.getAllCompanies().forEach(System.out::println);
         printUtils.print("Add company exceptions");
-        try{
+        try {
             adminService.addCompany(exception);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        try{
+        try {
             adminService.addCompany(exception2);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        printUtils.print("Update company exceptions");
-company4.setId(20);
-        try{
-            adminService.updateCompany(4,company4);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        company4.setId(4);
-        company4.setName("errroooorrr");
-        try{
-            adminService.updateCompany(4,company4);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        company4.setName("Coca cola1");
         printUtils.breakFunc();
         printUtils.print("Update company");
         printUtils.print("Before");
@@ -276,25 +256,43 @@ company4.setId(20);
         adminService.updateCompany(4, company4);
         printUtils.print("After");
         System.out.println(adminService.getSingleCompany(4));
+        printUtils.print("Update company exceptions");
+        company4.setId(20);
+        try {
+            adminService.updateCompany(4, company4);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        company4.setId(4);
+        company4.setName("errroooorrr");
+        try {
+            adminService.updateCompany(4, company4);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        company4.setName("Coca cola1");
         printUtils.breakFunc();
         printUtils.print("Delete company");
         printUtils.print("Before");
         adminService.getAllCompanies().forEach(System.out::println);
         adminService.deleteCompany(2);
-        printUtils.print("After");
+        printUtils.print("After deleting company#2");
         adminService.getAllCompanies().forEach(System.out::println);
         printUtils.breakFunc();
         printUtils.print("Add customer");
+        printUtils.print("Before");
+        adminService.getAllCustomers().forEach(System.out::println);
         adminService.addCustomer(customer1);
         adminService.addCustomer(customer2);
         adminService.addCustomer(customer3);
         adminService.addCustomer(customer4);
         adminService.addCustomer(customer5);
+        printUtils.print("After");
         adminService.getAllCustomers().forEach(System.out::println);
         printUtils.print("Add customer exceptions");
-        try{
+        try {
             adminService.addCustomer(customerException);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         printUtils.breakFunc();
@@ -309,9 +307,9 @@ company4.setId(20);
         System.out.println(adminService.getSingleCustomer(6));
         printUtils.print("Update customer exception");
         customer4.setId(20);
-        try{
-            adminService.updateCustomer(4,customer4);
-        }catch (Exception e){
+        try {
+            adminService.updateCustomer(4, customer4);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         customer4.setId(4);
@@ -319,69 +317,11 @@ company4.setId(20);
         printUtils.print("Delete customer");
         printUtils.print("Before");
         adminService.getAllCustomers().forEach(System.out::println);
-        printUtils.print("After");
+        printUtils.print("After deleting custoner #7");
         adminService.deleteCustomer(7);
         adminService.getAllCustomers().forEach(System.out::println);
+        printUtils.print("Admin service testing ended");
         printUtils.breakFunc();
-
-
-//        printUtils.companyLogin();
-//        printUtils.print("Add coupon");
-//        printUtils.print("Before");
-//        companyService.getAllCoupons().forEach(System.out::println);
-//        companyService.addCoupon(coupon11);
-//        printUtils.print("After");
-//        companyService.getAllCoupons().forEach(System.out::println);
-//        printUtils.breakFunc();
-//        printUtils.print("Update coupon");
-//        printUtils.print("Before");
-//        System.out.println(companyService.getSingleCoupon(21));
-//        coupon11.setCompany(company3);
-//        coupon11.setAmount(888);
-//        coupon11.setPrice(80.5);
-//        companyService.updateCoupon(21, coupon11);
-//        printUtils.print("After");
-//        System.out.println(companyService.getSingleCoupon(21));
-//        printUtils.breakFunc();
-//        printUtils.print("Delete Coupon");
-//        printUtils.print("Before");
-//        companyService.getAllCoupons().forEach(System.out::println);
-//        printUtils.print("After");
-//        companyService.deleteCoupon(1);
-//        companyService.getAllCoupons().forEach(System.out::println);
-//        printUtils.breakFunc();
-//        printUtils.print("Get all company coupons");
-//        companyService.getAllCompanyCoupons(3).forEach(System.out::println);
-//        printUtils.breakFunc();
-//        printUtils.print("Get all company coupons by category");
-//        companyService.getAllCompanyCouponsByCategory(3, Category.FOOD).forEach(System.out::println);
-//        printUtils.breakFunc();
-//        printUtils.print("Get all company coupons by max price 30");
-//        companyService.getAllCompanyCouponsByMaxPrice(3, 30).forEach(System.out::println);
-//        printUtils.breakFunc();
-//
-
-
-//        printUtils.customerLogin();
-//        printUtils.print("Purchase coupon");
-//        printUtils.print("Before");
-//        customerService.getAllCustomerPurchasedCoupons(4).forEach(System.out::println);
-//        customerService.purchaseCoupon(4, 9);
-//        printUtils.print("After");
-//        customerService.getAllCustomerPurchasedCoupons(4).forEach(System.out::println);
-//        printUtils.breakFunc();
-//        printUtils.print("complete: getAllCustomerPurchasedCouponsByCategory");
-//        printUtils.print("complete: getAllCustomerPurchasedCouponsByMaxPrice");
-//        printUtils.breakFunc();
-//        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
-//        printUtils.theEnd();
-//        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-//                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
     }
 }
 

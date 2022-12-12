@@ -18,11 +18,12 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping("companies")
-    public List<Company> getAllCompanies(){
+    public List<Company> getAllCompanies() {
         return adminService.getAllCompanies();
     }
+
     @GetMapping("coupons")
-    public List<Coupon> getAllCoupons(){
+    public List<Coupon> getAllCoupons() {
         return adminService.getAllCoupons();
     }
 
@@ -34,18 +35,21 @@ public class AdminController {
 
     @PutMapping("companies/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCompany(@PathVariable int companyId,@RequestBody Company company) throws CouponSysException {
-        adminService.updateCompany(companyId,company);
+    public void updateCompany(@PathVariable int companyId, @RequestBody Company company) throws CouponSysException {
+        adminService.updateCompany(companyId, company);
     }
+
     @DeleteMapping("companies/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable int companyId) throws CouponSysException {
         adminService.deleteCompany(companyId);
     }
+
     @GetMapping("companies/{companyId}")
     public Company getSingleCompany(@PathVariable int companyId) throws CouponSysException {
         return adminService.getSingleCompany(companyId);
     }
+
     @PostMapping("customers")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCustomer(@RequestBody Customer customer) throws CouponSysException {
@@ -54,18 +58,21 @@ public class AdminController {
 
     @PutMapping("customers/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer(@PathVariable int customerId,@RequestBody Customer customer) throws CouponSysException {
-        adminService.updateCustomer(customerId,customer);
+    public void updateCustomer(@PathVariable int customerId, @RequestBody Customer customer) throws CouponSysException {
+        adminService.updateCustomer(customerId, customer);
     }
+
     @DeleteMapping("customers/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(@PathVariable int customerId) throws CouponSysException {
         adminService.deleteCustomer(customerId);
     }
+
     @GetMapping("customers")
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return adminService.getAllCustomers();
     }
+
     @GetMapping("customers/{customerId}")
     public Customer getSingleCustomer(@PathVariable int customerId) throws CouponSysException {
         return adminService.getSingleCustomer(customerId);

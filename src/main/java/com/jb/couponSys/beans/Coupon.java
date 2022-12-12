@@ -19,7 +19,6 @@ public class Coupon {
     private int id;
     @ManyToOne
     private Company company;
-//    @ManyToMany
     @Enumerated(EnumType.STRING)
     private Category category;
     @Column(length = 40,nullable = false)

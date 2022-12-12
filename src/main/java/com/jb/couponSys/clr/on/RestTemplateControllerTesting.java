@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,143 +17,182 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 @Order(7)
 public class RestTemplateControllerTesting implements CommandLineRunner {
     @Value("${string.url.admin}")
-    private String admin;
+    private String ADMIN;
     @Value("${string.url.company}")
-    private String company;
+    private String COMPANY;
     @Value("${string.url.customer}")
-    private String customer;
+    private String CUSTOMER;
     @Autowired
     private PrintUtils printUtils;
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public void run(String... args) throws Exception {
-
-        Company restCompany1 = Company.builder()
-                .name("Rest template 1")
-                .email("Rest_template1@couponsystem.com")
-                .password("1234")
-                .build();
-        Company restCompany2 = Company.builder()
-                .name("Rest template 2")
-                .email("Rest_template2@couponsystem.com")
-                .password("1234")
-                .build();
-
-        Coupon restCoupon1 = Coupon.builder()
-                .company(restCompany1)
-                .category(Category.FOOD)
-                .title("restCompany1 coupon")
-                .description("no disc")
-                .startDate(Date.valueOf(LocalDate.now()))
-                .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
-                .price(20.5)
-                .amount(10)
-                .image("Image")
-                .build();
-        Coupon restCoupon2 = Coupon.builder()
-                .company(restCompany1)
-                .category(Category.ELECTRICITY)
-                .title("restCompany1 coupon")
-                .description("no disc")
-                .startDate(Date.valueOf(LocalDate.now()))
-                .endDate(Date.valueOf(LocalDate.now().plusYears(6)))
-                .price(30.5)
-                .amount(10)
-                .image("Image 2")
-                .build();
-        Coupon restCoupon3 = Coupon.builder()
-                .company(restCompany2)
-                .category(Category.FOOD)
-                .title("restCompany2 coupon")
-                .description("no disc")
-                .startDate(Date.valueOf(LocalDate.now()))
-                .endDate(Date.valueOf(LocalDate.now().plusYears(3)))
-                .price(40.5)
-                .amount(9)
-                .image("Image")
-                .build();
-
-        Customer restCustomer1 = Customer.builder()
-                .coupons(List.of(restCoupon1, restCoupon2))
-                .firstName("restCustomer1")
-                .lastName("restCustomer1")
-                .email("restCustomer1@couponsystem.com")
-                .password("1234")
-                .build();
-        Customer restCustomer2 = Customer.builder()
-                .coupons(List.of(restCoupon3, restCoupon1))
-                .firstName("restCustomer2")
-                .lastName("restCustomer2")
-                .email("restCustomer2@couponsystem.com")
-                .password("1234")
-                .build();
-
-
-        printUtils.print("Rest template controller testing");
+    public void run(String... args) {
+        printUtils.restTemplate();
+        Company restCompany1 = Company.builder().name("Rest template 1").email("Rest_template1@couponsystem.com").password("1234").build();
+        Company restCompany2 = Company.builder().name("Rest template 2").email("Rest_template2@couponsystem.com").password("1234").build();
+        Coupon restCoupon1 = Coupon.builder().company(restCompany2).category(Category.FOOD).title("RestCoupon1 coupon").description("no disc").startDate(Date.valueOf(LocalDate.now())).endDate(Date.valueOf(LocalDate.now().plusYears(5))).price(20.5).amount(10).image("Image").build();
+        Coupon restCoupon2 = Coupon.builder().company(restCompany2).category(Category.ELECTRICITY).title("RestCoupon2 coupon").description("no disc").startDate(Date.valueOf(LocalDate.now())).endDate(Date.valueOf(LocalDate.now().plusYears(6))).price(30.5).amount(10).image("Image 2").build();
+        Coupon restCoupon3 = Coupon.builder().company(restCompany2).category(Category.FOOD).title("RestCoupon3 coupon").description("no disc").startDate(Date.valueOf(LocalDate.now())).endDate(Date.valueOf(LocalDate.now().plusYears(3))).price(40.5).amount(9).image("Image").build();
+        Customer restCustomer1 = Customer.builder().coupons(List.of(restCoupon1, restCoupon2)).firstName("restCustomer1").lastName("restCustomer1").email("restCustomer1@couponsystem.com").password("1234").build();
+        Customer restCustomer2 = Customer.builder().coupons(List.of(restCoupon3, restCoupon1)).firstName("restCustomer2").lastName("restCustomer2").email("restCustomer2@couponsystem.com").password("1234").build();
         printUtils.print("Admin controller");
         printUtils.print("Get all companies");
-        Company[] getAllCompanies = restTemplate.getForObject(admin + "/companies", Company[].class);
+        Company[] getAllCompanies = restTemplate.getForObject(ADMIN + "/companies", Company[].class);
         Arrays.stream(getAllCompanies).collect(Collectors.toList()).forEach(System.out::println);
         printUtils.breakFunc();
         printUtils.print("Get all coupons");
-        Coupon[] getAllCoupons = restTemplate.getForObject(admin + "/coupons", Coupon[].class);
+        Coupon[] getAllCoupons = restTemplate.getForObject(ADMIN + "/coupons", Coupon[].class);
         Arrays.stream(getAllCoupons).collect(Collectors.toList()).forEach(System.out::println);
         printUtils.breakFunc();
         printUtils.print("Add company");
-        ResponseEntity<String> addCompany1 = restTemplate.postForEntity(admin + "/companies", restCompany1, String.class);
-        ResponseEntity<String> addCompany2 = restTemplate.postForEntity(admin + "/companies", restCompany2, String.class);
-        System.out.println((addCompany1.getStatusCode().is2xxSuccessful()) ? "Company added successfully" : "oh no-Failed to add company ");
-        System.out.println((addCompany2.getStatusCode().is2xxSuccessful()) ? "Company added successfully" : "oh no-Failed to add company ");
+        ResponseEntity<String> addCompany1 = restTemplate.postForEntity(ADMIN + "/companies", restCompany1, String.class);
+        ResponseEntity<String> addCompany2 = restTemplate.postForEntity(ADMIN + "/companies", restCompany2, String.class);
+        System.out.println((addCompany1.getStatusCodeValue() == 201) ? "Company added successfully" : "oh no-Failed to add company ");
+        System.out.println((addCompany2.getStatusCodeValue() == 201) ? "Company added successfully" : "oh no-Failed to add company ");
         printUtils.breakFunc();
         printUtils.print("Update company");
         printUtils.print("Before");
-        Company c1 = restTemplate.getForObject(admin + "/companies/10", Company.class);
+        Company c1 = restTemplate.getForObject(ADMIN + "/companies/10", Company.class);
         System.out.println(c1);
         printUtils.print("After");
-        restCompany1.setEmail("restCompanyMailUpdated@couponSys.com");
-        ResponseEntity<String> updateCompany = restTemplate.exchange(admin + "/companies/10", HttpMethod.PUT, restCompany1, String.class);
-        restTemplate.put(admin+"/companies/10",restCompany1);
-        Company c1Updated = restTemplate.getForObject(admin + "/10", Company.class);
+        c1.setEmail("restCompanyMailUpdated@couponSys.com");
+        HttpEntity<Company> requestUpdate1 = new HttpEntity<>(c1);
+        ResponseEntity<String> updateCompany = restTemplate.exchange(ADMIN + "/companies/10", HttpMethod.PUT, requestUpdate1, String.class);
+        Company c1Updated = restTemplate.getForObject(ADMIN + "/companies/10", Company.class);
         System.out.println(c1Updated);
-//        System.out.println((updateCompany.getStatusCode().is2xxSuccessful()) ? "Company updated successfully" : "oh no-Failed to update company ");
+        System.out.println((updateCompany.getStatusCodeValue() == 204) ? "Company updated successfully" : "oh no-Failed to update company ");
+        printUtils.breakFunc();
         printUtils.print("Delete company");
         printUtils.print("Before deleting");
-        Company[] beforeDeleting = restTemplate.getForObject(admin + "/companies", Company[].class);
+        Company[] beforeDeleting = restTemplate.getForObject(ADMIN + "/companies", Company[].class);
         Arrays.stream(beforeDeleting).collect(Collectors.toList()).forEach(System.out::println);
         printUtils.print("After deleting company #10");
-        ResponseEntity<String> deleteCompany=restTemplate.exchange(admin + "/companies/10",HttpMethod.DELETE,null,String.class);
-        System.out.println((deleteCompany.getStatusCodeValue()==204) ? "Customer deleted successfully" : "oh no-Failed to delete customer ");
-        Company[] afterDeleting = restTemplate.getForObject(admin + "/companies", Company[].class);
+        ResponseEntity<String> deleteCompany = restTemplate.exchange(ADMIN + "/companies/10", HttpMethod.DELETE, null, String.class);
+        System.out.println((deleteCompany.getStatusCodeValue() == 204) ? "Customer deleted successfully" : "oh no-Failed to delete customer");
+        Company[] afterDeleting = restTemplate.getForObject(ADMIN + "/companies", Company[].class);
         Arrays.stream(afterDeleting).collect(Collectors.toList()).forEach(System.out::println);
         printUtils.breakFunc();
         printUtils.print("Add customer");
-        ResponseEntity<String> addCustomer1=restTemplate.postForEntity(admin+"/customers",restCustomer1,String.class);
-        ResponseEntity<String> addCustomer2=restTemplate.postForEntity(admin+"/customers",restCustomer2,String.class);
-        System.out.println((addCustomer1.getStatusCode().is2xxSuccessful()) ? "Customer added successfully" : "oh no-Failed to add customer ");
-        System.out.println((addCustomer2.getStatusCode().is2xxSuccessful()) ? "Customer added successfully" : "oh no-Failed to add customer ");
-        Customer[] getAllCustomers=restTemplate.getForObject(admin+"/customers",Customer[].class);
+        ResponseEntity<String> addCustomer1 = restTemplate.postForEntity(ADMIN + "/customers", restCustomer1, String.class);
+        ResponseEntity<String> addCustomer2 = restTemplate.postForEntity(ADMIN + "/customers", restCustomer2, String.class);
+        System.out.println((addCustomer1.getStatusCodeValue() == 201) ? "Customer added successfully" : "oh no-Failed to add customer ");
+        System.out.println((addCustomer2.getStatusCodeValue() == 201) ? "Customer added successfully" : "oh no-Failed to add customer ");
+        Customer[] getAllCustomers = restTemplate.getForObject(ADMIN + "/customers", Customer[].class);
         Arrays.stream(getAllCustomers).collect(Collectors.toList()).forEach(System.out::println);
-
-
         printUtils.breakFunc();
-        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
+        printUtils.print("Update customer");
+        printUtils.print("Before");
+        Customer cu1 = restTemplate.getForObject(ADMIN + "/customers/12", Customer.class);
+        System.out.println(cu1);
+        printUtils.print("After");
+        cu1.setEmail("restCustomerMailUpdated@couponSys.com");
+        HttpEntity<Customer> requestUpdate2 = new HttpEntity<>(cu1);
+        ResponseEntity<String> updateCustomer = restTemplate.exchange(ADMIN + "/customers/12", HttpMethod.PUT, requestUpdate2, String.class);
+        Customer cu1Updated = restTemplate.getForObject(ADMIN + "/customers/12", Customer.class);
+        System.out.println(cu1Updated);
+        System.out.println((updateCustomer.getStatusCodeValue() == 204) ? "Customer updated successfully" : "oh no-Failed to update customer ");
+        printUtils.breakFunc();
+        printUtils.print("Delete customer");
+        printUtils.print("Before deleting");
+        Customer[] beforeDeletingCustomer = restTemplate.getForObject(ADMIN + "/customers", Customer[].class);
+        Arrays.stream(beforeDeletingCustomer).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.print("After deleting customer #12");
+        ResponseEntity<String> deleteCustomer = restTemplate.exchange(ADMIN + "/customers/12", HttpMethod.DELETE, null, String.class);
+        Customer[] afterDeletingCustomer = restTemplate.getForObject(ADMIN + "/customers", Customer[].class);
+        Arrays.stream(afterDeletingCustomer).collect(Collectors.toList()).forEach(System.out::println);
+        System.out.println((deleteCustomer.getStatusCodeValue() == 204) ? "Customer deleted successfully" : "oh no-Failed to delete customer ");
+        printUtils.breakFunc();
+        printUtils.print("Company controller");
+        printUtils.breakFunc();
+        printUtils.print("Add coupon");
+        restCompany2.setId(11);
+        System.out.println(restCoupon2);
+        ResponseEntity<String> addCoupon1 = restTemplate.postForEntity(COMPANY + "/coupons", restCoupon1, String.class);
+        ResponseEntity<String> addCoupon2 = restTemplate.postForEntity(COMPANY + "/coupons", restCoupon2, String.class);
+        ResponseEntity<String> addCoupon3 = restTemplate.postForEntity(COMPANY + "/coupons", restCoupon3, String.class);
+        System.out.println((addCoupon1.getStatusCodeValue() == 201) ? "RestCoupon1 added successfully" : "oh no- Failed to add coupon");
+        System.out.println((addCoupon2.getStatusCodeValue() == 201) ? "RestCoupon2 added successfully" : "oh no- Failed to add coupon");
+        System.out.println((addCoupon3.getStatusCodeValue() == 201) ? "RestCoupon3 added successfully" : "oh no- Failed to add coupon");
+        Coupon[] coupons = restTemplate.getForObject(ADMIN + "/coupons", Coupon[].class);
+        Arrays.stream(coupons).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Update coupon");
+        printUtils.print("Before");
+        Coupon couponUpdate = restTemplate.getForObject(COMPANY + "/coupons/33", Coupon.class);
+        System.out.println(couponUpdate);
+        printUtils.print("After");
+        couponUpdate.setDescription("rest coupon updated");
+        HttpEntity<Coupon> requestUpdate3 = new HttpEntity<>(couponUpdate);
+        ResponseEntity<String> updateCoupon = restTemplate.exchange(COMPANY + "/coupons/33", HttpMethod.PUT, requestUpdate3, String.class);
+        Coupon couponUpdate1 = restTemplate.getForObject(COMPANY + "/coupons/33", Coupon.class);
+        System.out.println(couponUpdate1);
+        System.out.println((updateCustomer.getStatusCodeValue() == 204) ? "Coupon updated successfully" : "oh no-Failed to update coupon ");
+        printUtils.breakFunc();
+        printUtils.print("Delete coupon");
+        printUtils.print("Before");
+        Coupon[] couponsList = restTemplate.getForObject(ADMIN + "/coupons", Coupon[].class);
+        Arrays.stream(couponsList).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.print("After deleting coupon #21");
+        ResponseEntity<String> deleteCoupon = restTemplate.exchange(COMPANY + "/coupons/21", HttpMethod.DELETE, null, String.class);
+        Coupon[] couponsListAfterDeleting = restTemplate.getForObject(ADMIN + "/coupons", Coupon[].class);
+        Arrays.stream(couponsListAfterDeleting).collect(Collectors.toList()).forEach(System.out::println);
+        System.out.println((deleteCoupon.getStatusCodeValue() == 204) ? "Coupon deleted successfully" : "oh no- Failed to delete coupon");
+        printUtils.breakFunc();
+        printUtils.print("Get single coupon");
+        Coupon coupon = restTemplate.getForObject(COMPANY + "/coupons/23", Coupon.class);
+        System.out.println(coupon);
+        printUtils.breakFunc();
+        printUtils.print("Get all company coupons");
+        Coupon[] getAllCompanyCoupons = restTemplate.getForObject(COMPANY + "/3/coupons", Coupon[].class);
+        Arrays.stream(getAllCompanyCoupons).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Get all company coupons by category");
+        Coupon[] getAllCompanyCouponsByCategory = restTemplate.getForObject(COMPANY + "/3/coupons/category?category=FOOD", Coupon[].class);
+        Arrays.stream(getAllCompanyCouponsByCategory).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Get all company coupons by max price of 25");
+        Coupon[] getAllCompanyCouponsByMaxPrice = restTemplate.getForObject(COMPANY + "/3/coupons/price/max?maxPrice=30", Coupon[].class);
+        Arrays.stream(getAllCompanyCouponsByMaxPrice).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Customer controller");
+        printUtils.breakFunc();
+        printUtils.print("Purchase coupon");
+        printUtils.print("Before purchasing");
+        Customer importRestCustomer2 = restTemplate.getForObject(ADMIN + "/customers/13", Customer.class);
+        System.out.println(importRestCustomer2);
+        HttpEntity<Customer> requestUpdate4 = new HttpEntity<>(null);
+        Map<String, Integer> params = new HashMap<>();
+        params.put("id", 13);
+        params.put("id", 23);
+        ResponseEntity<?> response = restTemplate.exchange(CUSTOMER + "/13/coupons/23", HttpMethod.POST, requestUpdate4, Set.class, params);
+        System.out.println((response.getStatusCodeValue() == 201) ? "Coupon purchased successfully" : "oh no- Failed to purchased coupon");
+        printUtils.print("After purchasing");
+        Customer importRestCustomer3 = restTemplate.getForObject(ADMIN + "/customers/13", Customer.class);
+        System.out.println(importRestCustomer3);
+        printUtils.breakFunc();
+        printUtils.print("Get all customer purchased coupons");
+        Coupon[] customerPurchasedCoupons = restTemplate.getForObject(CUSTOMER + "/13/coupons", Coupon[].class);
+        Arrays.stream(customerPurchasedCoupons).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Get all customer purchased coupons by category");
+        Coupon[] customerPurchasedCouponsByCategory = restTemplate.getForObject(CUSTOMER + "/11/coupons/category?category=VACATION", Coupon[].class);
+        Arrays.stream(customerPurchasedCouponsByCategory).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        printUtils.print("Get all customer purchased coupons by max price");
+        Coupon[] customerPurchasedCouponsByMaxPrice = restTemplate.getForObject(CUSTOMER + "/11/coupons/price/max?maxPrice=50.5", Coupon[].class);
+        Arrays.stream(customerPurchasedCouponsByMaxPrice).collect(Collectors.toList()).forEach(System.out::println);
+        printUtils.breakFunc();
+        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
         printUtils.theEnd();
-        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" +
-                "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
+        System.out.println("\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764" + "\u2764\u2764\u2764\u2764\u2764\u2764\u2764\u2764");
     }
 }

@@ -30,8 +30,7 @@ public class DailyJobTesting implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        printUtils.breakFunc();
-        printUtils.print("DailyJobTesting started");
+        printUtils.dailyJob();
         Company company999 = Company.builder()
                 .name("Coca cola999")
                 .email("company999@couponsystem.com")
@@ -59,14 +58,13 @@ public class DailyJobTesting implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().minusYears(5)))
                 .price(1.5)
                 .build();
-        printUtils.breakFunc();
         printUtils.print("Adding expired coupons");
         adminService.addCompany(company999);
         companyService.addCoupon(dailyJob1);
         companyService.addCoupon(dailyJob2);
         printUtils.print("Expired coupons removal started");
         expiredCouponDailyRemoval.removeExpiredCoupon();
+        printUtils.print("Daily job testing ended");
         printUtils.breakFunc();
-
     }
 }

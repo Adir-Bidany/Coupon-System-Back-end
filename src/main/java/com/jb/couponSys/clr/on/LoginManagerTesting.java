@@ -2,7 +2,6 @@ package com.jb.couponSys.clr.on;
 
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Customer;
-import com.jb.couponSys.service.AdminService;
 import com.jb.couponSys.security.ClientType;
 import com.jb.couponSys.security.LoginManager;
 import com.jb.couponSys.service.CompanyService;
@@ -24,8 +23,10 @@ public class LoginManagerTesting implements CommandLineRunner {
     private LoginManager loginManager;
     @Autowired
     private PrintUtils printUtils;
+
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        printUtils.loginManager();
         printUtils.print("Login manager testing started");
         Company company88 = Company.builder()
                 .name("8888")
@@ -39,20 +40,18 @@ public class LoginManagerTesting implements CommandLineRunner {
                 .password("11111")
                 .build();
         System.out.println("error 1");
-        try{
+        try {
             companyService = (CompanyService) loginManager.login(company88.getEmail(), company88.getPassword(), ClientType.COMPANY);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("error 2");
-        try{
+        try {
             customerService = (CustomerService) loginManager.login(customer88.getEmail(), customer88.getPassword(), ClientType.CUSTOMER);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         printUtils.print("Login manager testing ended");
         printUtils.breakFunc();
-
-
     }
 }
