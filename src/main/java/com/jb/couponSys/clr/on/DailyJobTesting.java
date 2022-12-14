@@ -64,6 +64,7 @@ public class DailyJobTesting implements CommandLineRunner {
         companyService.addCoupon(dailyJob2);
         printUtils.print("Expired coupons removal started");
         expiredCouponDailyRemoval.removeExpiredCoupon();
+        System.out.println("Coupons #28, #29, #30 removed successfully");
         printUtils.print("Daily job testing ended");
         printUtils.breakFunc();
     }

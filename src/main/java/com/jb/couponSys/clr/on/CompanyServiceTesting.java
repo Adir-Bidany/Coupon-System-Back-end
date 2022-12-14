@@ -96,7 +96,7 @@ public class CompanyServiceTesting implements CommandLineRunner {
         printUtils.print("Before");
         adminService.getAllCoupons().forEach(System.out::println);
         companyService.addCoupon(coupon2);
-        printUtils.print("After");
+        printUtils.print("After adding coupon #23");
         adminService.getAllCoupons().forEach(System.out::println);
         printUtils.print("Add coupon exception");
         try {

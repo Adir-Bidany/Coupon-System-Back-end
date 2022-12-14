@@ -214,11 +214,11 @@ public class Init implements CommandLineRunner {
         couponRepository.saveAll(List.of(coupon1, coupon2, coupon3, coupon4,
                 coupon5, coupon6, coupon7, coupon8, coupon9, coupon10));
         customerRepository.saveAll(List.of(customer1, customer2, customer3, customer4, customer5));
-        System.out.println("__________________________companies________________________________");
+        printUtils.print("Coupons");
         couponRepository.findAll().forEach(System.out::println);
-        System.out.println("__________________________customers________________________________");
+        printUtils.print("Customers");
         customerRepository.findAll().forEach(System.out::println);
-        System.out.println("__________________________companies________________________________");
+        printUtils.print("Companies");
         companyRepository.findAll().forEach(System.out::println);
         printUtils.print("Init ended");
         printUtils.breakFunc();

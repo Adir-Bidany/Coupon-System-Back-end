@@ -111,10 +111,12 @@ public class CustomerServiceTesting implements CommandLineRunner {
         customerService = (CustomerService) loginManager.login(customer.getEmail(), customer.getPassword(), ClientType.CUSTOMER);
         printUtils.print("Customer logged in successfully");
         printUtils.print("Purchase coupon");
-        printUtils.print("Before");
+        printUtils.print("Customer coupons before purchasing");
+        adminService.getSingleCustomer(customer.getId());
         customerService.getAllCustomerPurchasedCoupons(customer.getId()).forEach(System.out::println);
         customerService.purchaseCoupon(customer.getId(), 9);
-        printUtils.print("After");
+        printUtils.print("Customer coupons after purchasing coupon #9");
+        adminService.getSingleCustomer(customer.getId());
         customerService.getAllCustomerPurchasedCoupons(customer.getId()).forEach(System.out::println);
         printUtils.print("Purchase coupon exception");
         try {
@@ -135,7 +137,7 @@ public class CustomerServiceTesting implements CommandLineRunner {
         printUtils.breakFunc();
         printUtils.print("Get All Customer Purchased Coupons By Category");
         customerService.getAllCustomerPurchasedCouponsByCategory(customer.getId(), Category.VACATION).forEach(System.out::println);
-        printUtils.print("Get All Customer Purchased Coupons By Max Price");
+        printUtils.print("Get All Customer Purchased Coupons By Max Price of- 30");
         customerService.getAllCustomerPurchasedCouponsByMaxPrice(customer.getId(), 30).forEach(System.out::println);
         printUtils.print("Customer service testing ended");
         printUtils.breakFunc();
