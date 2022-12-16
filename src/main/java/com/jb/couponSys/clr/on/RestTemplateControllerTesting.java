@@ -17,7 +17,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -148,12 +151,11 @@ public class RestTemplateControllerTesting implements CommandLineRunner {
         printUtils.breakFunc();
         printUtils.print("Customer controller");
         printUtils.print("Purchase coupon");
-        HttpEntity<Customer> requestUpdate4 = new HttpEntity<>(null);
         Map<String, Integer> params = new HashMap<>();
-        params.put("id", 13);
-        params.put("id", 23);
-        ResponseEntity<?> response = restTemplate.exchange(CUSTOMER + "/13/coupons/23", HttpMethod.POST, requestUpdate4, Set.class, params);
-        System.out.println((response.getStatusCodeValue() == 201) ? "Coupon purchased successfully" : "oh no- Failed to purchased coupon");
+        params.put("customer_id", 13);
+        params.put("coupons_id", 23);
+        ResponseEntity<String> couponPurchaseResponse = restTemplate.exchange(CUSTOMER + "/13/coupons/23", HttpMethod.POST, null, String.class, params);
+        System.out.println((couponPurchaseResponse.getStatusCodeValue() == 201) ? "Coupon purchased successfully" : "oh no- Failed to purchased coupon");
         printUtils.breakFunc();
         printUtils.print("Get all customer #11 purchased coupons");
         Coupon[] customerPurchasedCoupons = restTemplate.getForObject(CUSTOMER + "/11/coupons", Coupon[].class);
