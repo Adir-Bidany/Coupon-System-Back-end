@@ -17,7 +17,6 @@ import java.time.LocalDate;
 
 @Component
 @Order(6)
-
 public class DailyJobTesting implements CommandLineRunner {
     @Autowired
     private ExpiredCouponDailyRemoval expiredCouponDailyRemoval;
@@ -62,9 +61,8 @@ public class DailyJobTesting implements CommandLineRunner {
         adminService.addCompany(company999);
         companyService.addCoupon(dailyJob1);
         companyService.addCoupon(dailyJob2);
-        printUtils.print("Expired coupons removal started");
+        printUtils.print("Expired coupons removal started- removing #28, #29, #30");
         expiredCouponDailyRemoval.removeExpiredCoupon();
-        System.out.println("Coupons #28, #29, #30 removed successfully");
         printUtils.print("Daily job testing ended");
         printUtils.breakFunc();
     }

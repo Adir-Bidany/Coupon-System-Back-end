@@ -18,9 +18,7 @@ public class PrintUtils {
     private String TEXT_WHITE;
 
     public void print(String content) {
-
         int len = content.length();
-
         if (len % 2 == 1) {
             int side = ((SIZE - len) / 2) + 1;
             System.out.print("_".repeat(side));

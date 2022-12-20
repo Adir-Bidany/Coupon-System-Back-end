@@ -43,7 +43,6 @@ public class CompanyServiceTesting implements CommandLineRunner {
                 .email("777777")
                 .password("1234")
                 .build();
-
         Coupon coupon = Coupon.builder()
                 .amount(10)
                 .category(Category.ELECTRICITY)
@@ -54,7 +53,6 @@ public class CompanyServiceTesting implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(1.5)
                 .build();
-
         Coupon coupon1 = Coupon.builder()
                 .amount(10)
                 .category(Category.FOOD)
@@ -104,16 +102,14 @@ public class CompanyServiceTesting implements CommandLineRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        // TODO: 09/12/2022 fix update coupon
         printUtils.breakFunc();
         printUtils.print("Update coupon");
         printUtils.print("Before");
         System.out.println(companyService.getSingleCoupon(22));
-        coupon.setCompany(company);
-        coupon.setAmount(888);
-        coupon.setPrice(80.5);
+        coupon1.setAmount(888);
+        coupon1.setPrice(80.5);
         companyService.updateCoupon(22, coupon1);
-        printUtils.print("After");
+        printUtils.print("After updating price and amount");
         System.out.println(companyService.getSingleCoupon(22));
         printUtils.print("Update coupon exception");
         coupon.setId(30);
@@ -147,7 +143,5 @@ public class CompanyServiceTesting implements CommandLineRunner {
         companyService.getAllCompanyCouponsByMaxPrice(company.getId(), 30).forEach(System.out::println);
         printUtils.print("Company service testing ended");
         printUtils.breakFunc();
-        // TODO: 10/12/2022  return the company details that enter
-
     }
 }

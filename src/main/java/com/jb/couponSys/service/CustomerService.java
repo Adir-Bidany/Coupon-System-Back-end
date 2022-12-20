@@ -9,10 +9,14 @@ import java.util.List;
 
 public interface CustomerService {
     boolean login(String email, String password) throws CouponSysException;
-    void purchaseCoupon(int customerId,int couponId) throws CouponSysException;
-    List<Coupon> getAllCustomerPurchasedCoupons(int customerId) throws CouponSysException;
-    List<Coupon> getAllCustomerPurchasedCouponsByCategory(int customerId, Category category) throws CouponSysException;
-    List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(int customerId,double maxPrice) throws CouponSysException;
-    Customer getLoginCustomer(int customerId) throws CouponSysException;
 
+    void purchaseCoupon(int customerId, int couponId) throws CouponSysException;
+
+    List<Coupon> getAllCustomerPurchasedCoupons(int customerId) throws CouponSysException;
+
+    List<Coupon> getAllCustomerPurchasedCouponsByCategory(int customerId, Category category) throws CouponSysException;
+
+    List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(int customerId, double maxPrice) throws CouponSysException;
+
+    Customer getLoginCustomer(int customerId) throws CouponSysException;
 }

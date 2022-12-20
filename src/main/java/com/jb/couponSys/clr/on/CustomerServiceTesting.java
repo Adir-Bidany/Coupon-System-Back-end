@@ -22,8 +22,6 @@ import java.util.List;
 @Component
 @Order(4)
 public class CustomerServiceTesting implements CommandLineRunner {
-
-
     @Autowired
     private CustomerService customerService;
     @Autowired
@@ -59,7 +57,7 @@ public class CustomerServiceTesting implements CommandLineRunner {
         Coupon coupon1 = Coupon.builder()
                 .company(company)
                 .amount(10)
-                .category(Category.RESTURANT)
+                .category(Category.RESTAURANT)
                 .title("Spring coupon5 second")
                 .image("Image")
                 .description("Get Spring drinks")

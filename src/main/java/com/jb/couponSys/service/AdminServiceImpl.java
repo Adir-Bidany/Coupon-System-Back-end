@@ -30,10 +30,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
 
     @Override
     public void updateCompany(int companyId, Company company) throws CouponSysException {
-//        if (!companyRepository.existsById(companyId)) {
-//            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
-//        }
-        Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         if (company1.getId() != company.getId()) {
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_ID);
         }
@@ -45,10 +42,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
 
     @Override
     public void deleteCompany(int companyId) throws CouponSysException {
-//        if (!companyRepository.existsById(companyId)){
-//            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
-//        }
-        Company companyToDelete = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        Company companyToDelete = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         List<Coupon> companyCoupons = companyToDelete.getCoupons();
         for (Coupon c : companyCoupons) {
             int couponId = c.getId();
@@ -69,7 +63,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
 
     @Override
     public Company getSingleCompany(int companyId) throws CouponSysException {
-        return companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        return companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
     }
 
     @Override
@@ -81,15 +75,14 @@ public class AdminServiceImpl extends ClientService implements AdminService {
             throw new CouponSysException(ErrMsg.COMPANY_EMAIL_ALREADY_EXIST);
         }
         customerRepository.save(customer);
-
     }
 
     @Override
     public void updateCustomer(int customerId, Customer customer) throws CouponSysException {
         if (!customerRepository.existsById(customerId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
-        Customer customer1 = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        Customer customer1 = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         if (customer1.getId() != customer.getId()) {
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_CUSTOMER_ID);
         }
@@ -99,7 +92,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
     @Override
     public void deleteCustomer(int customerId) throws CouponSysException {
         if (!customerRepository.existsById(customerId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         customerRepository.deleteCustomerCoupons(customerId);
         customerRepository.deleteById(customerId);
@@ -112,7 +105,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
 
     @Override
     public Customer getSingleCustomer(int customerId) throws CouponSysException {
-        return customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        return customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
     }
 
     @Override

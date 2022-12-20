@@ -25,9 +25,9 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     @Override
     public void updateCoupon(int couponId, Coupon coupon) throws CouponSysException {
         if (!couponRepository.existsById(couponId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
-        Coupon coupon1 = couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        Coupon coupon1 = couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         if (coupon1.getId() != coupon.getId()) {
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COUPON_ID);
         }
@@ -42,7 +42,7 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     @Override
     public void deleteCoupon(int couponId) throws CouponSysException {
         if (!couponRepository.existsById(couponId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         couponRepository.deleteCouponsFromCustomersVsCoupons(couponId);
         couponRepository.deleteById(couponId);
@@ -50,13 +50,13 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
 
     @Override
     public Coupon getSingleCoupon(int couponId) throws CouponSysException {
-        return couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        return couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
     }
 
     @Override
     public List<Coupon> getAllCompanyCoupons(int companyId) throws CouponSysException {
         if (!companyRepository.existsById(companyId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         return couponRepository.findByCompanyId(companyId);
     }
@@ -64,10 +64,10 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     @Override
     public List<Coupon> getAllCompanyCouponsByCategory(int companyId, Category category) throws CouponSysException {
         if (!companyRepository.existsById(companyId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         if (!couponRepository.existsByCategory(category)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         return couponRepository.findByCompanyIdAndCategory(companyId, category);
     }
@@ -75,21 +75,21 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     @Override
     public List<Coupon> getAllCompanyCouponsByMaxPrice(int companyId, double maxPrice) throws CouponSysException {
         if (!companyRepository.existsById(companyId)) {
-            throw new CouponSysException(ErrMsg.ID_DOSENT_EXIST);
+            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         return couponRepository.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
     }
 
     @Override
     public Company getLoginCompany(int companyId) throws CouponSysException {
-        return companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+        return companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
     }
 
     @Override
     public boolean login(String email, String password) throws CouponSysException {
         if (companyRepository.existsByEmailAndPassword(email, password)) {
             int companyId = companyRepository.getCompanyIdByEmailAndPassword(email, password);
-            Company company = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOSENT_EXIST));
+            Company company = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
             company.setId(companyId);
             return true;
         }

@@ -20,5 +20,4 @@ public class CouponSysApplication {
         SpringApplication.run(CouponSysApplication.class, args);
         System.out.println("Application running");
     }
-
 }

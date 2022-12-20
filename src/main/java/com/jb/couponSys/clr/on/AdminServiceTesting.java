@@ -61,7 +61,6 @@ public class AdminServiceTesting implements CommandLineRunner {
                 .email("company6@couponsystem.com")
                 .password("1234")
                 .build();
-
         Coupon coupon1 = Coupon.builder()
                 .company(company4)
                 .amount(10)
@@ -131,7 +130,7 @@ public class AdminServiceTesting implements CommandLineRunner {
         Coupon coupon7 = Coupon.builder()
                 .company(company6)
                 .amount(10)
-                .category(Category.RESTURANT)
+                .category(Category.RESTAURANT)
                 .title("Spring coupon2 second")
                 .image("Image")
                 .description("Get Spring drinks")
@@ -164,7 +163,7 @@ public class AdminServiceTesting implements CommandLineRunner {
         Coupon coupon10 = Coupon.builder()
                 .company(company6)
                 .amount(10)
-                .category(Category.RESTURANT)
+                .category(Category.RESTAURANT)
                 .title("Spring coupon5 second")
                 .image("Image")
                 .description("Get Spring drinks")
@@ -182,8 +181,6 @@ public class AdminServiceTesting implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(1.5)
                 .build();
-
-
         Customer customer1 = Customer.builder()
                 .coupons(List.of(coupon1, coupon2, coupon3))
                 .firstName("Itamar second")
@@ -226,7 +223,6 @@ public class AdminServiceTesting implements CommandLineRunner {
                 .email("customersecond5@couponsystem.com")
                 .password("1234")
                 .build();
-
         company4.setCoupons(List.of(coupon1, coupon2, coupon3));
         company5.setCoupons(List.of(coupon4, coupon5));
         company6.setCoupons(List.of(coupon6, coupon7, coupon8, coupon9, coupon10));
@@ -317,7 +313,7 @@ public class AdminServiceTesting implements CommandLineRunner {
         printUtils.print("Delete customer");
         printUtils.print("Before");
         adminService.getAllCustomers().forEach(System.out::println);
-        printUtils.print("After deleting custoner #7");
+        printUtils.print("After deleting customer #7");
         adminService.deleteCustomer(7);
         adminService.getAllCustomers().forEach(System.out::println);
         printUtils.print("Admin service testing ended");

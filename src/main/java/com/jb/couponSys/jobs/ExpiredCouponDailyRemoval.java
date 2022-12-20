@@ -6,7 +6,6 @@ import com.jb.couponSys.service.AdminService;
 import com.jb.couponSys.service.CompanyService;
 import com.jb.couponSys.utils.PrintUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -22,18 +21,15 @@ public class ExpiredCouponDailyRemoval {
     private AdminService adminService;
     @Autowired
     private CompanyService companyService;
-//    @Value("${string.time}")
-//    private int DAILY;
 
     @Scheduled(cron = "0 0 6 * * *")
-    //@Scheduled(fixedRate = 1000*10)
-    //@Scheduled(fixedRate = DAILY)
+//    @Scheduled(fixedRate = 1000 * 10)
     public void removeExpiredCoupon() throws CouponSysException {
         printUtils.print("Get all coupons");
         adminService.getAllCoupons().forEach(System.out::println);
-        List<Coupon> coupons=adminService.getAllCoupons();
-        for (Coupon c:coupons) {
-            if(c.getEndDate().before(Date.valueOf(LocalDate.now()))){
+        List<Coupon> coupons = adminService.getAllCoupons();
+        for (Coupon c : coupons) {
+            if (c.getEndDate().before(Date.valueOf(LocalDate.now()))) {
                 companyService.deleteCoupon(c.getId());
             }
         }

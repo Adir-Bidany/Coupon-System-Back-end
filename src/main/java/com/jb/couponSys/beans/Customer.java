@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,7 +24,6 @@ public class Customer {
     private String email;
     @Column(length = 40, nullable = false)
     private String password;
-
     @ManyToMany
     @Singular("addOne")
     @JsonIgnore

@@ -77,5 +77,4 @@ public class AdminController {
     public Customer getSingleCustomer(@PathVariable int customerId) throws CouponSysException {
         return adminService.getSingleCustomer(customerId);
     }
-
 }

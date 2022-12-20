@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginManager {
-
     @Value("${string.adminMail}")
     private String adminMail;
     @Value("${string.adminPassword}")
@@ -47,9 +46,7 @@ public class LoginManager {
                     return clientService;
                 }
                 break;
-
         }
         throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);
     }
-
 }

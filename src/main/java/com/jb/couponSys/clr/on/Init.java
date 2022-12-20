@@ -48,7 +48,6 @@ public class Init implements CommandLineRunner {
                 .email("company3@couponsystem.com")
                 .password("1234")
                 .build();
-
         Coupon coupon1 = Coupon.builder()
                 .company(company1)
                 .category(Category.FOOD)
@@ -117,7 +116,7 @@ public class Init implements CommandLineRunner {
                 .build();
         Coupon coupon7 = Coupon.builder()
                 .company(company3)
-                .category(Category.RESTURANT)
+                .category(Category.RESTAURANT)
                 .title("Spring coupon2")
                 .description("Get Spring drinks")
                 .startDate(Date.valueOf(LocalDate.now()))
@@ -150,7 +149,7 @@ public class Init implements CommandLineRunner {
                 .build();
         Coupon coupon10 = Coupon.builder()
                 .company(company3)
-                .category(Category.RESTURANT)
+                .category(Category.RESTAURANT)
                 .title("Spring coupon5")
                 .description("Get Spring drinks")
                 .startDate(Date.valueOf(LocalDate.now()))
@@ -159,18 +158,6 @@ public class Init implements CommandLineRunner {
                 .amount(10)
                 .image("Image")
                 .build();
-        Coupon coupon11 = Coupon.builder()
-                .category(Category.ELECTRICITY)
-                .title("Added coupon")
-                .description("BUY BUY BUY")
-                .startDate(Date.valueOf(LocalDate.now()))
-                .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
-                .price(1.5)
-                .amount(10)
-                .image("Image")
-                .build();
-
-
         Customer customer1 = Customer.builder()
                 .coupons(List.of(coupon1, coupon2, coupon3))
                 .firstName("Itamar")
@@ -206,7 +193,6 @@ public class Init implements CommandLineRunner {
                 .email("customer5@couponsystem.com")
                 .password("1234")
                 .build();
-
         company1.setCoupons(List.of(coupon1, coupon2, coupon3));
         company2.setCoupons(List.of(coupon4, coupon5));
         company3.setCoupons(List.of(coupon6, coupon7, coupon8, coupon9, coupon10));
