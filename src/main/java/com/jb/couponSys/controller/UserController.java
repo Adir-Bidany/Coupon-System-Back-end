@@ -3,14 +3,15 @@ package com.jb.couponSys.controller;
 import com.jb.couponSys.dto.LoginReqDto;
 import com.jb.couponSys.dto.LoginResDto;
 import com.jb.couponSys.exception.CouponSysException;
-import com.jb.couponSys.security.service.AdminService;
-import com.jb.couponSys.security.service.CompanyService;
-import com.jb.couponSys.security.service.CustomerService;
+import com.jb.couponSys.service.AdminService;
+import com.jb.couponSys.service.CompanyService;
+import com.jb.couponSys.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/couponSys/user")
 @RequiredArgsConstructor
 public class UserController {

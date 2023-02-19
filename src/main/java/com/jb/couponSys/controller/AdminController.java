@@ -7,8 +7,8 @@ import com.jb.couponSys.dto.UpdateCompanyPayload;
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
 import com.jb.couponSys.security.ClientType;
-import com.jb.couponSys.security.service.AdminService;
-import com.jb.couponSys.security.service.TokenService;
+import com.jb.couponSys.service.AdminService;
+import com.jb.couponSys.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/couponSys/admin")
 public class AdminController {
     @Autowired

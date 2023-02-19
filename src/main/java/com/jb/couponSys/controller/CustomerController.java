@@ -6,8 +6,8 @@ import com.jb.couponSys.beans.Customer;
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
 import com.jb.couponSys.security.ClientType;
-import com.jb.couponSys.security.service.CustomerService;
-import com.jb.couponSys.security.service.TokenService;
+import com.jb.couponSys.service.CustomerService;
+import com.jb.couponSys.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/couponSys/customer")
 @CrossOrigin(origins = "*")
+@RequestMapping("api/couponSys/customer")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -33,14 +33,13 @@ public class CustomerController {
 //        customerService.purchaseCoupon(customerId, couponId);
 //    }
 
-    @PostMapping("/{token}/coupons/{couponId}")
+    @PostMapping("/coupons/purchase/{couponId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void purchaseCoupon(@PathVariable UUID token, @PathVariable int couponId, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
-        System.out.println("8888888888888888888888");
-        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
+    public void purchaseCoupon(@PathVariable int couponId, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
+        if (!tokenService.isValid(token2, ClientType.CUSTOMER)) {
             throw new CouponSysException(ErrMsg.INVALID_TOKEN);
         }
-        customerService.purchaseCoupon(token, couponId);
+        customerService.purchaseCoupon(token2, couponId);
     }
 
 //    @GetMapping("{customerId}/coupons")
