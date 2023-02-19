@@ -1,5 +1,6 @@
 package com.jb.couponSys.beans;
 
+import com.jb.couponSys.dto.CouponPayload;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +33,15 @@ public class Coupon {
     private int amount;
     @Column(length = 100, nullable = false)
     private String image;
+
+    public Coupon(CouponPayload couponPayload) {
+        this.category = couponPayload.getCategory();
+        this.title = couponPayload.getTitle();
+        this.description = couponPayload.getDescription();
+        this.startDate = couponPayload.getStartDate();
+        this.endDate = couponPayload.getEndDate();
+        this.amount = couponPayload.getAmount();
+        this.price = couponPayload.getPrice();
+        this.image = couponPayload.getImage();
+    }
 }

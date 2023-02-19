@@ -16,7 +16,8 @@ public enum ErrMsg {
     CANNOT_PURCHASE_THE_SAME_COUPON("\uD83D\uDE25 oops-cannot purchase the same coupon twice \uD83D\uDE25"),
     CANNOT_PURCHASE_COUPON_AMOUNT_0("\uD83D\uDE25 oops-cannot purchase coupon, amount is-0- \uD83D\uDE25"),
     CANNOT_PURCHASE_COUPON_DATE_EXPIRED("\uD83D\uDE25 oops-cannot purchase coupon date expired \uD83D\uDE25"),
-    INVALID_EMAIL_OR_PASSWORD("\uD83D\uDE25 oops-invalid email or password \uD83D\uDE25");
+    INVALID_EMAIL_OR_PASSWORD("\uD83D\uDE25 oops-invalid email or password \uD83D\uDE25"),
+    INVALID_TOKEN("\uD83D\uDE25 oops-invalid token \uD83D\uDE25");
 
     private String message;
 

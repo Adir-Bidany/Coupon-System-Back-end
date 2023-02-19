@@ -1,6 +1,5 @@
-package com.jb.couponSys.service;
+package com.jb.couponSys.security.service;
 
-import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.repository.CompanyRepository;
 import com.jb.couponSys.repository.CouponRepository;
 import com.jb.couponSys.repository.CustomerRepository;
@@ -13,5 +12,5 @@ public abstract class ClientService {
     protected CustomerRepository customerRepository;
     @Autowired
     protected CouponRepository couponRepository;
-    public abstract boolean login (String email, String password) throws CouponSysException;
+//    public abstract boolean login (String email, String password) throws CouponSysException;
 }

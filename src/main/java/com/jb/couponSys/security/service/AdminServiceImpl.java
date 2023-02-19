@@ -1,13 +1,17 @@
-package com.jb.couponSys.service;
+package com.jb.couponSys.security.service;
 
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
+import com.jb.couponSys.dto.LoginReqDto;
+import com.jb.couponSys.dto.LoginResDto;
+import com.jb.couponSys.dto.UpdateCompanyPayload;
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdminServiceImpl extends ClientService implements AdminService {
@@ -28,16 +32,36 @@ public class AdminServiceImpl extends ClientService implements AdminService {
         companyRepository.save(company);
     }
 
-    @Override
-    public void updateCompany(int companyId, Company company) throws CouponSysException {
+//    @Override
+//    public void deleteExpCoupons() {
+//        couponRepository.deleteExpCoupon();
+//    }
+
+//    @Override
+//    public void updateCompany(int companyId, Company company) throws CouponSysException {
+//        Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
+//        if (company1.getId() != company.getId()) {
+//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_ID);
+//        }
+//        if (!company1.getName().equals(company.getName())) {
+//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_NAME);
+//        }
+//        companyRepository.saveAndFlush(company);
+//    }
+
+    public Company updateCompany(int companyId, UpdateCompanyPayload updateCompanyPayload) throws CouponSysException {
         Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-        if (company1.getId() != company.getId()) {
+        Company company = new Company(updateCompanyPayload);
+        company1.setEmail(company.getEmail());
+        company1.setPassword(company.getPassword());
+        company.setId(companyId);
+        if (company.getId() != company.getId()) {
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_ID);
         }
-        if (!company1.getName().equals(company.getName())) {
-            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_NAME);
-        }
-        companyRepository.saveAndFlush(company);
+//        if (!company.getName().equals(company.getName())) {
+//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_NAME);
+//        }
+        return companyRepository.saveAndFlush(company1);
     }
 
     @Override
@@ -83,7 +107,10 @@ public class AdminServiceImpl extends ClientService implements AdminService {
             throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         Customer customer1 = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
+        customer.setId(customer1.getId());
         if (customer1.getId() != customer.getId()) {
+            System.out.println(customer1.getId());
+            System.out.println(customer.getId());
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_CUSTOMER_ID);
         }
         customerRepository.saveAndFlush(customer);
@@ -111,5 +138,14 @@ public class AdminServiceImpl extends ClientService implements AdminService {
     @Override
     public boolean login(String email, String password) {
         return true;
+    }
+
+    @Override
+    public LoginResDto loginDto(LoginReqDto req) throws CouponSysException {
+        if (req.getEmail().equals("admin@admin.com") && req.getPassword().equals("admin")) {
+            LoginResDto loginResDto = new LoginResDto(UUID.randomUUID(), req.getEmail(), req.getClientType());
+            return loginResDto;
+        }
+        throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);
     }
 }

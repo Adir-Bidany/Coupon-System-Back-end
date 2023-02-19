@@ -1,6 +1,7 @@
 package com.jb.couponSys.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jb.couponSys.dto.CustomerPayload;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,4 +29,11 @@ public class Customer {
     @Singular("addOne")
     @JsonIgnore
     private List<Coupon> coupons;
+
+    public Customer(CustomerPayload customerPayload) {
+        this.firstName = customerPayload.getFirstName();
+        this.lastName = customerPayload.getLastName();
+        this.email = customerPayload.getEmail();
+        this.password = customerPayload.getPassword();
+    }
 }

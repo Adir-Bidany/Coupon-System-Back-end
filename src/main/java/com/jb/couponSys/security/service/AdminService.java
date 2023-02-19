@@ -1,8 +1,11 @@
-package com.jb.couponSys.service;
+package com.jb.couponSys.security.service;
 
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
+import com.jb.couponSys.dto.LoginReqDto;
+import com.jb.couponSys.dto.LoginResDto;
+import com.jb.couponSys.dto.UpdateCompanyPayload;
 import com.jb.couponSys.exception.CouponSysException;
 
 import java.util.List;
@@ -10,9 +13,15 @@ import java.util.List;
 public interface AdminService {
     boolean login(String email, String password);
 
+    LoginResDto loginDto(LoginReqDto req) throws CouponSysException;
+
     void addCompany(Company company) throws CouponSysException;
 
-    void updateCompany(int companyId, Company company) throws CouponSysException;
+//    void deleteExpCoupons();
+
+//    void updateCompany(int companyId, Company company) throws CouponSysException;
+
+    Company updateCompany(int companyId, UpdateCompanyPayload updateCompanyPayload) throws CouponSysException;
 
     void deleteCompany(int companyId) throws CouponSysException;
 

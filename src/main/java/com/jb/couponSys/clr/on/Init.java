@@ -57,7 +57,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(20.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon2 = Coupon.builder()
                 .company(company1)
@@ -68,7 +68,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(6)))
                 .price(30.5)
                 .amount(10)
-                .image("Image 2")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon3 = Coupon.builder()
                 .company(company1)
@@ -79,7 +79,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(3)))
                 .price(40.5)
                 .amount(9)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon4 = Coupon.builder()
                 .company(company2)
@@ -90,7 +90,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(20.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon5 = Coupon.builder()
                 .company(company2)
@@ -101,18 +101,18 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(30.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon6 = Coupon.builder()
                 .company(company3)
                 .category(Category.FOOD)
                 .title("Spring coupon1")
                 .description("Get Spring drinks")
-                .startDate(Date.valueOf(LocalDate.now()))
-                .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
+                .startDate(Date.valueOf(LocalDate.now().minusYears(5)))
+                .endDate(Date.valueOf(LocalDate.now().minusYears(2)))
                 .price(20.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon7 = Coupon.builder()
                 .company(company3)
@@ -123,7 +123,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(7)))
                 .price(40.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon8 = Coupon.builder()
                 .company(company3)
@@ -134,7 +134,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(15.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon9 = Coupon.builder()
                 .company(company3)
@@ -145,7 +145,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(20.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Coupon coupon10 = Coupon.builder()
                 .company(company3)
@@ -156,7 +156,7 @@ public class Init implements CommandLineRunner {
                 .endDate(Date.valueOf(LocalDate.now().plusYears(5)))
                 .price(30.5)
                 .amount(10)
-                .image("Image")
+                .image("https://picsum.photos/200")
                 .build();
         Customer customer1 = Customer.builder()
                 .coupons(List.of(coupon1, coupon2, coupon3))
