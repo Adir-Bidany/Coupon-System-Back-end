@@ -16,24 +16,24 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    
-    @PostMapping("{customerId}/coupons/{couponId}")//
+
+    @PostMapping("{customerId}/coupons/{couponId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void purchaseCoupon(@PathVariable int customerId, @PathVariable int couponId) throws CouponSysException {
         customerService.purchaseCoupon(customerId, couponId);
     }
 
-    @GetMapping("{customerId}/coupons")//
+    @GetMapping("{customerId}/coupons")
     public List<Coupon> getAllCustomerPurchasedCoupons(@PathVariable int customerId) throws CouponSysException {
         return customerService.getAllCustomerPurchasedCoupons(customerId);
     }
 
-    @GetMapping("{customerId}/coupons/category")//
+    @GetMapping("{customerId}/coupons/category")
     public List<Coupon> getAllCustomerPurchasedCouponsByCategory(@PathVariable int customerId, @RequestParam String category) throws CouponSysException {
         return customerService.getAllCustomerPurchasedCouponsByCategory(customerId, Category.valueOf(category));
     }
 
-    @GetMapping("{customerId}/coupons/price/max")//
+    @GetMapping("{customerId}/coupons/price/max")
     public List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(@PathVariable int customerId, @RequestParam double maxPrice) throws CouponSysException {
         return customerService.getAllCustomerPurchasedCouponsByMaxPrice(customerId, maxPrice);
     }
