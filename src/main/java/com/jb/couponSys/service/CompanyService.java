@@ -1,4 +1,4 @@
-package com.jb.couponSys.security.service;
+package com.jb.couponSys.service;
 
 import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Company;

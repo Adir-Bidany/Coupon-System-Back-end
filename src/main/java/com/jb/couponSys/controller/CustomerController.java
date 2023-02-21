@@ -24,38 +24,23 @@ public class CustomerController {
     @Autowired
     private TokenService tokenService;
 
-//    @PostMapping("{customerId}/coupons/{couponId}")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void purchaseCoupon(@PathVariable int customerId, @PathVariable int couponId, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-//        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
-//            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-//        }
-//        customerService.purchaseCoupon(customerId, couponId);
-//    }
 
-    @PostMapping("/coupons/purchase/{couponId}")
+    @PostMapping("{token}/coupons/{couponId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void purchaseCoupon(@PathVariable int couponId, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
+    public void purchaseCoupon(@PathVariable UUID token, @PathVariable int couponId, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token2, ClientType.CUSTOMER)) {
             throw new CouponSysException(ErrMsg.INVALID_TOKEN);
         }
         customerService.purchaseCoupon(token2, couponId);
     }
 
-//    @GetMapping("{customerId}/coupons")
-//    public List<Coupon> getAllCustomerPurchasedCoupons(@PathVariable int customerId, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-//        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
-//            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-//        }
-//        return customerService.getAllCustomerPurchasedCoupons(customerId);
-//    }
 
-    @GetMapping("/token/{uuid}/coupons")
-    public List<Coupon> getAllCustomerPurchasedCoupons(@PathVariable UUID uuid, @RequestHeader("Authorization") UUID token) throws CouponSysException {
+    @GetMapping("{token}/coupons")
+    public List<Coupon> getAllCustomerPurchasedCoupons(@PathVariable UUID token, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
             throw new CouponSysException(ErrMsg.INVALID_TOKEN);
         }
-        return customerService.getAllCustomerPurchasedCouponsByToken(uuid);
+        return customerService.getAllCustomerPurchasedCouponsByToken(token);
     }
 
     @GetMapping("{customerId}/coupons/category")

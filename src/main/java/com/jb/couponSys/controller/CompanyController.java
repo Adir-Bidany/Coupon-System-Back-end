@@ -24,7 +24,7 @@ public class CompanyController {
     private TokenService tokenService;
 
 
-    @PostMapping("/{token}/coupons")
+    @PostMapping("{token}/coupons")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCoupon(@PathVariable UUID token, @RequestBody CouponPayload couponPayload, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token, ClientType.COMPANY)) {
@@ -42,7 +42,7 @@ public class CompanyController {
     }
 
 
-    @DeleteMapping("/{token}/coupons/{couponId}")
+    @DeleteMapping("{token}/coupons/{couponId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCoupon(@PathVariable UUID token, @PathVariable int couponId, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token, ClientType.COMPANY)) {
@@ -51,36 +51,12 @@ public class CompanyController {
         companyService.deleteCoupon(token, couponId);
     }
 
-//    @GetMapping("coupons/{couponId}")
-//    public Coupon getSingleCoupon(@PathVariable int couponId, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-//        if (!tokenService.isValid(token, ClientType.COMPANY)) {
-//            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-//        }
-//        return companyService.getSingleCoupon(couponId);
-//    }
-
-    @GetMapping("/token/{uuid}/coupons")
-    public List<Coupon> getAllCompanyCoupons(@PathVariable UUID uuid, @RequestHeader("Authorization") UUID token) throws CouponSysException {
+    @GetMapping("{token}/coupons")
+    public List<Coupon> getAllCompanyCoupons(@PathVariable UUID token, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token, ClientType.COMPANY)) {
             throw new CouponSysException(ErrMsg.INVALID_TOKEN);
         }
-        return companyService.getAllCompanyCouponsByToken(uuid);
+        return companyService.getAllCompanyCouponsByToken(token);
     }
-
-//    @GetMapping("{companyId}/coupons/category")
-//    public List<Coupon> getAllCompanyCouponsByCategory(@PathVariable int companyId, @RequestParam String category, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-//        if (!tokenService.isValid(token, ClientType.COMPANY)) {
-//            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-//        }
-//        return companyService.getAllCompanyCouponsByCategory(companyId, Category.valueOf(category));
-//    }
-//
-//    @GetMapping("{companyId}/coupons/price/max")
-//    public List<Coupon> getAllCompanyCouponsByMaxPrice(@PathVariable int companyId, @RequestParam double maxPrice, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-//        if (!tokenService.isValid(token, ClientType.COMPANY)) {
-//            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-//        }
-//        return companyService.getAllCompanyCouponsByMaxPrice(companyId, maxPrice);
-//    }
 
 }

@@ -2,10 +2,10 @@ package com.jb.couponSys.security;
 
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
-import com.jb.couponSys.security.service.AdminService;
-import com.jb.couponSys.security.service.ClientService;
-import com.jb.couponSys.security.service.CompanyService;
-import com.jb.couponSys.security.service.CustomerService;
+import com.jb.couponSys.service.AdminService;
+import com.jb.couponSys.service.ClientService;
+import com.jb.couponSys.service.CompanyService;
+import com.jb.couponSys.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
