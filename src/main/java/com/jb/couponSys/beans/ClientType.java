@@ -1,4 +1,4 @@
-package com.jb.couponSys.security;
+package com.jb.couponSys.beans;
 
 public enum ClientType {
     ADMINISTRATOR,

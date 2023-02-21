@@ -1,12 +1,12 @@
 package com.jb.couponSys.controller;
 
+import com.jb.couponSys.beans.ClientType;
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
 import com.jb.couponSys.dto.UpdateCompanyPayload;
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
-import com.jb.couponSys.security.ClientType;
 import com.jb.couponSys.service.AdminService;
 import com.jb.couponSys.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,7 +26,7 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     public void addCoupon(UUID token, CouponPayload couponPayload) throws CouponSysException {
         Coupon coupon = new Coupon(couponPayload);
         coupon.setCompany(companyRepository.findById(tokenService.getUserID(token)).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST)));
-        if (!couponRepository.existsById(coupon.getCompany().getId())) {
+        if (!companyRepository.existsById(coupon.getCompany().getId())) {
             throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
         }
         if (coupon.getCompany() != null) {
@@ -74,19 +74,6 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     }
 
     @Override
-    public Coupon getSingleCoupon(int couponId) throws CouponSysException {
-        return couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-    }
-
-//    @Override
-//    public List<Coupon> getAllCompanyCoupons(int companyId) throws CouponSysException {
-//        if (!companyRepository.existsById(companyId)) {
-//            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
-//        }
-//        return couponRepository.findByCompanyId(companyId);
-//    }
-
-    @Override
     public List<Coupon> getAllCompanyCouponsByCategory(int companyId, Category category) throws CouponSysException {
         if (!companyRepository.existsById(companyId)) {
             throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
@@ -105,10 +92,6 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
         return couponRepository.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
     }
 
-    @Override
-    public Company getLoginCompany(int companyId) throws CouponSysException {
-        return companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-    }
 
     @Override
     public List<Coupon> getAllCompanyCouponsByToken(UUID uuid) throws CouponSysException {
@@ -120,21 +103,9 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     }
 
     @Override
-    public boolean login(String email, String password) throws CouponSysException {
-        if (companyRepository.existsByEmailAndPassword(email, password)) {
-            int companyId = companyRepository.getCompanyIdByEmailAndPassword(email, password);
-            Company company = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-            company.setId(companyId);
-            return true;
-        }
-        throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);
-    }
-
-    @Override
     public Company login(UpdateCompanyPayload updateCompanyPayload) throws CouponSysException {
         if (companyRepository.existsByEmailAndPassword(updateCompanyPayload.getEmail(), updateCompanyPayload.getPassword())) {
             int companyId = companyRepository.getCompanyIdByEmailAndPassword(updateCompanyPayload.getEmail(), updateCompanyPayload.getPassword());
-//            Company company = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
             Company company = new Company(updateCompanyPayload);
             company.setId(companyId);
             return company;

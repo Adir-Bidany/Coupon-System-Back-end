@@ -29,28 +29,6 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
     @Autowired
     private TokenService tokenService;
 
-//    @Override
-//    public void purchaseCoupon(int customerId, int couponId) throws CouponSysException {
-//        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-//        List<Coupon> customerCoupons = customer.getCoupons();
-//        for (Coupon c : customerCoupons) {
-//            if (c.getId() == couponId) {
-//                throw new CouponSysException(ErrMsg.CANNOT_PURCHASE_THE_SAME_COUPON);
-//            }
-//        }
-//        Coupon coupon = couponRepository.findById(couponId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-//        if (coupon.getAmount() < 1) {
-//            throw new CouponSysException(ErrMsg.CANNOT_PURCHASE_COUPON_AMOUNT_0);
-//        }
-//        if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
-//            throw new CouponSysException(ErrMsg.CANNOT_PURCHASE_COUPON_DATE_EXPIRED);
-//        }
-//        coupon.setAmount(coupon.getAmount() - 1);
-//        customer.getCoupons().add(coupon);
-//        couponRepository.saveAndFlush(coupon);
-//        customerRepository.saveAndFlush(customer);
-//    }
-
     @Override
     public void purchaseCoupon(UUID token, int couponId) throws CouponSysException {
         int customerId = tokenService.getUserID(token);
@@ -74,11 +52,6 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
         customerRepository.saveAndFlush(customer);
     }
 
-//    @Override
-//    public List<Coupon> getAllCustomerPurchasedCoupons(int customerId) throws CouponSysException {
-//        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-//        return customer.getCoupons();
-//    }
 
     @Override
     public List<Coupon> getAllCustomerPurchasedCouponsByCategory(int customerId, Category category) throws CouponSysException {
@@ -108,27 +81,11 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
     }
 
     @Override
-    public Customer getLoginCustomer(int customerId) throws CouponSysException {
-        return customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-    }
-
-    @Override
     public List<Coupon> getAllCustomerPurchasedCouponsByToken(UUID uuid) throws CouponSysException {
         int customerId = tokenService.getUserID(uuid);
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         List<Coupon> customerCoupon = customer.getCoupons();
         return customerCoupon;
-    }
-
-    @Override
-    public boolean login(String email, String password) throws CouponSysException {
-        if (customerRepository.existsByEmailAndPassword(email, password)) {
-            int customerId = customerRepository.getCustomerIdByEmailAndPassword(email, password);
-            Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-            customer.setId(customerId);
-            return true;
-        }
-        throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);
     }
 
     @Override

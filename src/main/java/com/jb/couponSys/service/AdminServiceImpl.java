@@ -32,23 +32,6 @@ public class AdminServiceImpl extends ClientService implements AdminService {
         companyRepository.save(company);
     }
 
-//    @Override
-//    public void deleteExpCoupons() {
-//        couponRepository.deleteExpCoupon();
-//    }
-
-//    @Override
-//    public void updateCompany(int companyId, Company company) throws CouponSysException {
-//        Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-//        if (company1.getId() != company.getId()) {
-//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_ID);
-//        }
-//        if (!company1.getName().equals(company.getName())) {
-//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_NAME);
-//        }
-//        companyRepository.saveAndFlush(company);
-//    }
-
     public Company updateCompany(int companyId, UpdateCompanyPayload updateCompanyPayload) throws CouponSysException {
         Company company1 = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
         Company company = new Company(updateCompanyPayload);
@@ -58,9 +41,6 @@ public class AdminServiceImpl extends ClientService implements AdminService {
         if (company.getId() != company.getId()) {
             throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_ID);
         }
-//        if (!company.getName().equals(company.getName())) {
-//            throw new CouponSysException(ErrMsg.CANNOT_UPDATE_COMPANY_NAME);
-//        }
         return companyRepository.saveAndFlush(company1);
     }
 
@@ -133,11 +113,6 @@ public class AdminServiceImpl extends ClientService implements AdminService {
     @Override
     public Customer getSingleCustomer(int customerId) throws CouponSysException {
         return customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-    }
-
-    @Override
-    public boolean login(String email, String password) {
-        return true;
     }
 
     @Override

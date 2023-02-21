@@ -11,15 +11,10 @@ import com.jb.couponSys.exception.CouponSysException;
 import java.util.List;
 
 public interface AdminService {
-    boolean login(String email, String password);
 
     LoginResDto loginDto(LoginReqDto req) throws CouponSysException;
 
     void addCompany(Company company) throws CouponSysException;
-
-//    void deleteExpCoupons();
-
-//    void updateCompany(int companyId, Company company) throws CouponSysException;
 
     Company updateCompany(int companyId, UpdateCompanyPayload updateCompanyPayload) throws CouponSysException;
 

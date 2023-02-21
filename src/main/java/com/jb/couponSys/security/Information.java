@@ -1,5 +1,6 @@
 package com.jb.couponSys.security;
 
+import com.jb.couponSys.beans.ClientType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

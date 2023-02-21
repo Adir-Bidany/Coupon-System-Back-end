@@ -1,7 +1,6 @@
 package com.jb.couponSys.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jb.couponSys.dto.CompanyPayload;
 import com.jb.couponSys.dto.UpdateCompanyPayload;
 import lombok.*;
 
@@ -29,12 +28,6 @@ public class Company {
     @Singular
     @JsonIgnore
     private List<Coupon> coupons;
-
-    public Company(CompanyPayload companyPayload) {
-        this.name = companyPayload.getName();
-        this.email = companyPayload.getEmail();
-        this.password = companyPayload.getPassword();
-    }
 
     public Company(UpdateCompanyPayload updateCompanyPayload) {
         this.email = updateCompanyPayload.getEmail();

@@ -12,5 +12,4 @@ public abstract class ClientService {
     protected CustomerRepository customerRepository;
     @Autowired
     protected CouponRepository couponRepository;
-//    public abstract boolean login (String email, String password) throws CouponSysException;
 }

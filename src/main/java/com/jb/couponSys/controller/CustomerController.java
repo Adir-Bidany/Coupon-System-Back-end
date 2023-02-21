@@ -1,11 +1,10 @@
 package com.jb.couponSys.controller;
 
 import com.jb.couponSys.beans.Category;
+import com.jb.couponSys.beans.ClientType;
 import com.jb.couponSys.beans.Coupon;
-import com.jb.couponSys.beans.Customer;
 import com.jb.couponSys.exception.CouponSysException;
 import com.jb.couponSys.exception.ErrMsg;
-import com.jb.couponSys.security.ClientType;
 import com.jb.couponSys.service.CustomerService;
 import com.jb.couponSys.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +56,5 @@ public class CustomerController {
             throw new CouponSysException(ErrMsg.INVALID_TOKEN);
         }
         return customerService.getAllCustomerPurchasedCouponsByMaxPrice(customerId, maxPrice);
-    }
-
-    @GetMapping("login/customers/{customerId}")
-    public Customer login(@PathVariable int customerId, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
-            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-        }
-        return customerService.getLoginCustomer(customerId);
     }
 }
