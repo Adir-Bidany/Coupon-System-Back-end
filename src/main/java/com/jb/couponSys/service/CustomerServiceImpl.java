@@ -1,6 +1,5 @@
 package com.jb.couponSys.service;
 
-import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.Customer;
 import com.jb.couponSys.beans.User;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,34 +50,6 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
         customerRepository.saveAndFlush(customer);
     }
 
-
-    @Override
-    public List<Coupon> getAllCustomerPurchasedCouponsByCategory(int customerId, Category category) throws CouponSysException {
-        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-        List<Coupon> customerCoupons = customer.getCoupons();
-        List<Coupon> customerCouponsByCategory = new ArrayList<>();
-        for (Coupon c : customerCoupons) {
-            if (c.getCategory().equals(category)) {
-                customerCouponsByCategory.add(c);
-            }
-        }
-        return customerCouponsByCategory;
-    }
-
-    @Override
-    public List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(int customerId, double maxPrice) throws CouponSysException {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
-        List<Coupon> customerCoupons = customer.getCoupons();
-        List<Coupon> customerCouponsByMaxPrice = new ArrayList<>();
-        for (Coupon c : customerCoupons) {
-            if (c.getPrice() <= maxPrice) {
-                customerCouponsByMaxPrice.add(c);
-            }
-        }
-        return customerCouponsByMaxPrice;
-    }
-
     @Override
     public List<Coupon> getAllCustomerPurchasedCouponsByToken(UUID uuid) throws CouponSysException {
         int customerId = tokenService.getUserID(uuid);
@@ -92,9 +62,10 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
     public LoginResDto loginDto(LoginReqDto req) throws CouponSysException {
         if (customerRepository.existsByEmailAndPassword(req.getEmail(), req.getPassword())) {
             int customerId = customerRepository.getCustomerIdByEmailAndPassword(req.getEmail(), req.getPassword());
+            Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
             User user = new User(customerId, req.getEmail(), req.getPassword(), req.getClientType());
             UUID token = tokenService.addUser(user);
-            LoginResDto loginResDto = LoginResDto.builder().token(token).email(req.getEmail()).clientType(req.getClientType()).build();
+            LoginResDto loginResDto = LoginResDto.builder().token(token).email(req.getEmail()).clientType(req.getClientType()).name(customer.getFirstName()).build();
             return loginResDto;
         }
         throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);

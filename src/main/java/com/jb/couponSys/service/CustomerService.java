@@ -1,6 +1,5 @@
 package com.jb.couponSys.service;
 
-import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.dto.LoginReqDto;
 import com.jb.couponSys.dto.LoginResDto;
@@ -16,9 +15,5 @@ public interface CustomerService {
     void purchaseCoupon(UUID token, int couponId) throws CouponSysException;
 
     List<Coupon> getAllCustomerPurchasedCouponsByToken(UUID uuid) throws CouponSysException;
-
-    List<Coupon> getAllCustomerPurchasedCouponsByCategory(int customerId, Category category) throws CouponSysException;
-
-    List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(int customerId, double maxPrice) throws CouponSysException;
 
 }

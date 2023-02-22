@@ -1,6 +1,5 @@
 package com.jb.couponSys.controller;
 
-import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.ClientType;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.exception.CouponSysException;
@@ -32,8 +31,7 @@ public class CustomerController {
         }
         customerService.purchaseCoupon(token2, couponId);
     }
-
-
+    
     @GetMapping("{token}/coupons")
     public List<Coupon> getAllCustomerPurchasedCoupons(@PathVariable UUID token, @RequestHeader("Authorization") UUID token2) throws CouponSysException {
         if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
@@ -42,19 +40,4 @@ public class CustomerController {
         return customerService.getAllCustomerPurchasedCouponsByToken(token);
     }
 
-    @GetMapping("{customerId}/coupons/category")
-    public List<Coupon> getAllCustomerPurchasedCouponsByCategory(@PathVariable int customerId, @RequestParam String category, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
-            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-        }
-        return customerService.getAllCustomerPurchasedCouponsByCategory(customerId, Category.valueOf(category));
-    }
-
-    @GetMapping("{customerId}/coupons/price/max")
-    public List<Coupon> getAllCustomerPurchasedCouponsByMaxPrice(@PathVariable int customerId, @RequestParam double maxPrice, @RequestHeader("Authorization") UUID token) throws CouponSysException {
-        if (!tokenService.isValid(token, ClientType.CUSTOMER)) {
-            throw new CouponSysException(ErrMsg.INVALID_TOKEN);
-        }
-        return customerService.getAllCustomerPurchasedCouponsByMaxPrice(customerId, maxPrice);
-    }
 }

@@ -16,4 +16,5 @@ public class LoginResDto {
     private UUID token;
     private String email;
     private ClientType clientType;
+    private String name;
 }

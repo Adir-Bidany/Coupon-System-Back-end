@@ -1,6 +1,5 @@
 package com.jb.couponSys.service;
 
-import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.beans.User;
@@ -74,26 +73,6 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     }
 
     @Override
-    public List<Coupon> getAllCompanyCouponsByCategory(int companyId, Category category) throws CouponSysException {
-        if (!companyRepository.existsById(companyId)) {
-            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
-        }
-        if (!couponRepository.existsByCategory(category)) {
-            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
-        }
-        return couponRepository.findByCompanyIdAndCategory(companyId, category);
-    }
-
-    @Override
-    public List<Coupon> getAllCompanyCouponsByMaxPrice(int companyId, double maxPrice) throws CouponSysException {
-        if (!companyRepository.existsById(companyId)) {
-            throw new CouponSysException(ErrMsg.ID_DOESNT_EXIST);
-        }
-        return couponRepository.findByCompanyIdAndPriceLessThan(companyId, maxPrice);
-    }
-
-
-    @Override
     public List<Coupon> getAllCompanyCouponsByToken(UUID uuid) throws CouponSysException {
         int companyId = tokenService.getUserID(uuid);
         if (!companyRepository.existsById(companyId)) {
@@ -117,9 +96,10 @@ public class CompanyServiceImpl extends ClientService implements CompanyService 
     public LoginResDto loginDto(LoginReqDto req) throws CouponSysException {
         if (companyRepository.existsByEmailAndPassword(req.getEmail(), req.getPassword())) {
             int companyId = companyRepository.getCompanyIdByEmailAndPassword(req.getEmail(), req.getPassword());
+            Company company = companyRepository.findById(companyId).orElseThrow(() -> new CouponSysException(ErrMsg.ID_DOESNT_EXIST));
             User user = new User(companyId, req.getEmail(), req.getPassword(), req.getClientType());
             UUID token = tokenService.addUser(user);
-            LoginResDto loginResDto = LoginResDto.builder().token(token).email(req.getEmail()).clientType(req.getClientType()).build();
+            LoginResDto loginResDto = LoginResDto.builder().token(token).email(req.getEmail()).clientType(req.getClientType()).name(company.getName()).build();
             return loginResDto;
         }
         throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);

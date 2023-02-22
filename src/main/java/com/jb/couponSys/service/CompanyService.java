@@ -1,6 +1,5 @@
 package com.jb.couponSys.service;
 
-import com.jb.couponSys.beans.Category;
 import com.jb.couponSys.beans.Company;
 import com.jb.couponSys.beans.Coupon;
 import com.jb.couponSys.dto.CouponPayload;
@@ -22,10 +21,6 @@ public interface CompanyService {
     Coupon updateCoupon(UUID token, int couponId, CouponPayload couponPayload) throws CouponSysException;
 
     void deleteCoupon(UUID token, int couponId) throws CouponSysException;
-
-    List<Coupon> getAllCompanyCouponsByCategory(int companyId, Category category) throws CouponSysException;
-
-    List<Coupon> getAllCompanyCouponsByMaxPrice(int companyId, double maxPrice) throws CouponSysException;
 
     List<Coupon> getAllCompanyCouponsByToken(UUID uuid) throws CouponSysException;
 }

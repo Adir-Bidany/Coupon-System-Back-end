@@ -118,7 +118,7 @@ public class AdminServiceImpl extends ClientService implements AdminService {
     @Override
     public LoginResDto loginDto(LoginReqDto req) throws CouponSysException {
         if (req.getEmail().equals("admin@admin.com") && req.getPassword().equals("admin")) {
-            LoginResDto loginResDto = new LoginResDto(UUID.randomUUID(), req.getEmail(), req.getClientType());
+            LoginResDto loginResDto = new LoginResDto(UUID.randomUUID(), req.getEmail(), req.getClientType(), "Admin");
             return loginResDto;
         }
         throw new CouponSysException(ErrMsg.INVALID_EMAIL_OR_PASSWORD);
